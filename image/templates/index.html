@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>ImagePixels</title>
+  </head>
+  <body>
+    <h1>ImagePixels</h1>
+    <div class="container">
+        <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-lg btn-success">Upload</button>
+        </form>
+        <form action="#" method="get">
+            <button type="submit" class="action" id="action">Do</button>
+            <p><strong>In image:</strong>
+            {{ bw }}</p>
+            <p><strong>Hex-code of color</strong>
+            <input type="text" maxlength="25" size="40" value=""></p>
+            <p><strong>Number of pixels</strong>
+            {{ bw}}</p>
+        </form>
+        <hr>
+        {% if obj %}
+        <h3>Succesfully uploaded : {{img_obj.caption}}</h3>
+        <img src="{{ obj.image.url}}" alt="image" class="img-thumbnail" id="img-thumbnail" height="70%" width="70%">
+        {% endif %}
+
+        {% for x in img %}
+        {% if forloop.first %}<div class="row ">{% endif %}
+        <div class="col-lg-4 col-md-4 col-12" >
+            <div class="text-center mt-2">
+                <img src="{{x.image.url}}" height="70%" width="70%" class="img-thumbnail" alt="...">
+                <h2 class="text-center" >{{x.caption}}</h2></div>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+    </div>
+        <div class=row>{% endif %}
+            {% if forloop.last %}</div>{% endif %}
+        {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+  </body>
+</html>
